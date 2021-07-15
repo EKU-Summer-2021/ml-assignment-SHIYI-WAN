@@ -45,3 +45,31 @@ class LinearRegression:
         self.X = pd_data.loc[:, ('age', 'sex', 'bmi', 'children', 'region')]
         self.y = pd_data.loc[:, 'charges']
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y, test_size=0.2, random_state=532)
+
+   def build_model(self):
+        '''
+        build the model
+        '''
+        linreg = LinearRegression()
+        model = linreg.fit(self.X_train, self.y_train)
+        print('model para:')
+        print(model)
+        print('intercept:')
+        print(linreg.intercept_)
+        print('coef:')
+        print(linreg.coef_)
+
+        y_pred = linreg.predict(self.X_test)
+        sum_mean = 0
+        for i in range(len(y_pred)):
+            sum_mean += (y_pred[i] - self.y_test.values[i]) ** 2
+        sum_erro = np.sqrt(sum_mean / len(y_pred))
+        # calculate RMSE
+        print("RMSE by hand:", sum_erro)
+        plt.figure()
+        plt.plot(range(len(y_pred)), y_pred, 'b', label="predict")
+        plt.plot(range(len(y_pred)), self.y_test, 'r', label="test")
+        plt.legend(loc="upper right")
+        plt.xlabel("the number of sales")
+        plt.ylabel('value of sales')
+        plt.show()        
