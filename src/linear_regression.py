@@ -33,3 +33,15 @@ def normalization():
             writer.writerow([sam[0][i], sam[1][i], sam[2][i], sam[3][i], sam[4][i], sam[5][i]])
     print("done")
 
+class LinearRegression:
+    '''
+    create a class to initialize Linear Regression models
+    '''
+    def __init__(self):
+        '''
+        set the configuration of the Linear Regression model with a constructor.
+        '''
+        pd_data = pd.read_csv('insurance2.csv')
+        self.X = pd_data.loc[:, ('age', 'sex', 'bmi', 'children', 'region')]
+        self.y = pd_data.loc[:, 'charges']
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y, test_size=0.2, random_state=532)
